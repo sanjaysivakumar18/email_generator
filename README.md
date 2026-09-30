@@ -1,132 +1,102 @@
 # AI Email Generator
 
-A web application that generates complete emails from a topic, recipient, tone and optional key points using Gemini.
+A full-stack web application that creates context-aware email drafts with subject lines using Google Gemini AI. Built with React, Node.js, Express, and modern CSS.
+
+![Stack](https://img.shields.io/badge/Stack-React%20%7C%20Node.js%20%7C%20Express%20%7C%20Gemini-blue)
 
 ## Features
 
-- AI-generated email subject and body
-- Multiple tone options (Professional, Friendly, Formal, Casual)
-- Custom key points
-- Copy generated email to clipboard
-- Regenerate email with a single click
-- Clear form and reset state
-- Responsive interface (Desktop two-column layout & Mobile single-column layout)
-- Secure backend API avoiding client-side API key exposure
+- **Custom AI Generation**: Creates formatted subject lines and email bodies tailored to recipient, topic, and key points.
+- **Tone Customization**: Choose between Professional, Friendly, Formal, Casual, Persuasive, and Urgent tones.
+- **One-Click Actions**: Quick copy-to-clipboard for subject and body, or instant regeneration.
+- **Responsive Design**: Dark mode UI built with responsive layouts for mobile and desktop screens.
+- **Secure Backend**: Gemini API keys are handled server-side and never exposed to the frontend.
 
 ## Tech Stack
 
-- React
-- Vite
-- Node.js
-- Express
-- Gemini API
+- **Frontend**: React, Vite, CSS
+- **Backend**: Node.js, Express.js
+- **AI Model**: Google Generative AI (`@google/generative-ai`)
 
 ## Project Structure
 
 ```
-ai-email-generator/
-├── frontend/
+email_generator/
+├── frontend/             # React + Vite frontend UI
 │   ├── src/
 │   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-│
-├── backend/
-│   ├── server.js
-│   ├── package.json
-│   ├── .env
-│   └── .gitignore
-│
+│   │   ├── index.css
+│   │   └── main.jsx
+│   └── package.json
+├── backend/              # Express API server
+│   ├── server.js         # API routes & Gemini integration
+│   └── package.json
 └── README.md
 ```
 
-## Setup
+## Quick Start
 
 ### Prerequisites
+- Node.js (v18 or higher)
+- Gemini API Key ([Get one from Google AI Studio](https://aistudio.google.com/))
 
-Ensure Node.js (v18 or higher) and npm are installed on your machine.
+### 1. Backend Setup
 
-### Backend Setup
+```bash
+cd backend
+npm install
+```
 
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
+Create a `.env` file inside the `backend` folder:
 
-2. Install backend dependencies:
-   ```bash
-   npm install
-   ```
+```env
+PORT=5050
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-2.5-flash
+```
 
-3. Create a `.env` file in the `backend` directory:
-   ```env
-   GEMINI_API_KEY=your_api_key_here
-   GEMINI_MODEL=gemini-2.5-flash
-   ```
+Start the server:
 
-   > **Important:** Never commit your `.env` file or hardcode your API key into git. `backend/.env` is ignored by `.gitignore`.
+```bash
+npm start
+```
+Server runs on `http://localhost:5050`.
 
-4. Start the Express backend server:
-   ```bash
-   node server.js
-   ```
-   The backend runs on `http://localhost:5050`.
+### 2. Frontend Setup
 
-### Frontend Setup
+Open a separate terminal tab:
 
-1. Open a new terminal and navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Open `http://localhost:3000` in your browser.
 
-2. Install frontend dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the Vite development server:
-   ```bash
-   npm run dev
-   ```
-   The frontend runs on `http://localhost:3000`.
-
----
-
-## API Documentation
+## API Reference
 
 ### `POST /api/generate-email`
 
-Generates an email subject and body based on provided inputs.
+Generates an email subject and body.
 
-#### Request Body:
-
+**Request Body:**
 ```json
 {
-  "topic": "Requesting two days leave",
-  "recipient": "College Professor",
-  "tone": "Professional",
-  "keyPoints": "I have a family function and will complete the missed work."
+  "topic": "Requesting a 2-day extension for project submission",
+  "recipient": "Professor Smith",
+  "tone": "Formal",
+  "keyPoints": "Had a fever over the weekend, need extra time to finish final testing."
 }
 ```
 
-#### Response:
-
+**Response:**
 ```json
 {
-  "subject": "Leave Request for Two Days",
-  "body": "Dear Professor,\n\nI am writing to formally request two days of leave..."
+  "subject": "Request for Deadline Extension - [Your Name]",
+  "body": "Dear Professor Smith,\n\nI am writing to request a short extension on the project submission..."
 }
 ```
 
----
+## License
 
-## Future Improvements
-
-- More email templates
-- Additional tone controls
-- Saved drafts
-- Export options (PDF/TXT)
-- Direct email service integration
+MIT
